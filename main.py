@@ -1,7 +1,7 @@
 import pygame as pg
 from time import time
 from config import *
-from map import Snake_map
+from Game import Snake_Game
 
 pg.init()
 
@@ -23,24 +23,37 @@ def run():
     for event in pg.event.get():
         if event.type == pg.QUIT:
             pg.quit()
-            return False
+            return (False,0)
         
         if event.type == pg.KEYDOWN:
             if event.key == pg.K_ESCAPE:
                 pg.quit()
-                return False
-    return True
+                return (False,0)
+            if event.key == pg.K_UP:return (True,1)
+            if event.key == pg.K_LEFT:return (True,2)
+            if event.key == pg.K_DOWN:return (True,3)
+            if event.key == pg.K_RIGHT:return (True,4)
+    return (True,0)
 
-dt = 1/(clock.get_fps()+0.0001)
 
-snake_map = Snake_map(window)
+snake_Game = Snake_Game(window)
+loop_run = True
+time_eclipsed=0
+set_move=0
+while loop_run:
+    loop_run, move = run()
+    if move!=0:set_move=move
 
-
-while run():
     current_fps=clock.get_fps()
-    dt = 1/current_fps if current_fps!=0  else 0.0001
+    dt = 1/current_fps if current_fps!=0  else 0.001
+    time_eclipsed += dt
+    print(set_move)
+    snake_Game.draw_grid()
+    snake_Game.draw_game()
+    
+    if time_eclipsed>step_time:
+        time_eclipsed = 0
+        snake_Game.step(set_move)
 
-    # snake_map.draw_grid()
-    snake_map.draw_food()
 
     
