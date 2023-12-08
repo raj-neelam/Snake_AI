@@ -1,9 +1,9 @@
 
 # main Config
-block_size = 30
-width,height=(500,400)
-step_time = 0.5
-snake_boder = 1
+block_size = 50
+width,height=(600,600)
+step_time = 0.1 #sec
+snake_boder = 0.1
 
 # colors
 bg_col = "black"
@@ -13,4 +13,4 @@ snake_head_col = "yellow"
 
 # application
 name = "Snake AI"
-fps=200
+fps=2000

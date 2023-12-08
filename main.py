@@ -40,6 +40,7 @@ snake_Game = Snake_Game(window)
 loop_run = True
 time_eclipsed=0
 set_move=0
+
 while loop_run:
     loop_run, move = run()
     if move!=0:set_move=move
@@ -47,8 +48,8 @@ while loop_run:
     current_fps=clock.get_fps()
     dt = 1/current_fps if current_fps!=0  else 0.001
     time_eclipsed += dt
-    print(set_move)
-    snake_Game.draw_grid()
+
+    # snake_Game.draw_grid()
     snake_Game.draw_game()
     
     if time_eclipsed>step_time:

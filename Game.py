@@ -19,25 +19,25 @@ class Snake_Game:
     
     def draw_game(self):
         # drawing food 
-        pg.draw.rect(self.window,food_col,
-                     ((self.food.food_location[0]*block_size)+self.extera_space_x/2,
-                      (self.food.food_location[1]*block_size)+self.extera_space_y/2,
-                      block_size,block_size))
+        self.draw_rect(self.food.food_location, food_col)
         
         # drawing snake
-        pg.draw.rect(self.window, snake_head_col, 
-                     ((self.snake.snake_head_location[0]*block_size)+self.extera_space_x/2,
-                      (self.snake.snake_head_location[1]*block_size)+self.extera_space_y/2,
-                      block_size,block_size))
+        self.draw_snake()
         
-        pg.draw.rect(self.window, bg_col, 
-                     ((self.snake.snake_head_location[0]*block_size)+((block_size*(1-snake_boder))*0.5)+self.extera_space_x/2,
-                      (self.snake.snake_head_location[1]*block_size)+((block_size*(1-snake_boder))*0.5)+self.extera_space_y/2,
-                       block_size*snake_boder,
-                       block_size*snake_boder))
+    def draw_snake(self):
+        for body_part in self.snake.body:
+            self.draw_rect(body_part, snake_head_col)
+            self.draw_rect(body_part, bg_col, snake_boder)
+    
+    def draw_rect(self, ind, col, scale_down=0):
+        pg.draw.rect(self.window, col, 
+                     ((ind[0]*block_size)+(self.extera_space_x/2)+((block_size*scale_down)),
+                      (ind[1]*block_size)+(self.extera_space_y/2)+((block_size*scale_down)),
+                      block_size*(1-scale_down*2),
+                      block_size*(1-scale_down*2)))
 
     def step(self,move=0):
-        self.snake.move(move)
+        self.snake.move(move,self.food)
 
     def draw_grid(self):
         for x in range(int(self.x_cells)+1):
