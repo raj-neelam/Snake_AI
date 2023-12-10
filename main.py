@@ -33,10 +33,11 @@ def run():
             if event.key == pg.K_LEFT:return (True,2)
             if event.key == pg.K_DOWN:return (True,3)
             if event.key == pg.K_RIGHT:return (True,4)
+            if event.key == pg.K_SPACE:return (True,5)
     return (True,0)
 
 
-snake_Game = Snake_Game(window)
+snake_Game = Snake_Game(window, wall_collition)
 loop_run = True
 time_eclipsed=0
 set_move=0
@@ -54,7 +55,14 @@ while loop_run:
     
     if time_eclipsed>step_time:
         time_eclipsed = 0
-        snake_Game.step(set_move)
+
+        data = snake_Game.step(set_move)
+        if data[-1]==True:
+            pg.quit()
+            print("game over")
+            quit()
+        print(data)
+
 
 
     
